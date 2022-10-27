@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PresentationController</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            background-color: black;
+            font-family: Arial, Helvetica, sans-serif;
+            user-select: none;
+        }
+
+        .buttonHolder {
+            display: flex;
+            flex: 1;
+        }
+
+        .buttons {
+            color: white;
+            background: rgb(0, 93, 168);
+            height: 80vh;
+            margin: 0.8em;
+
+            font-size: 2em;
+            text-align: center;
+            padding-top: 20%;
+            border-radius: 20px;
+
+        }
+
+
+        .buttons:active {
+            background-color: rgb(3, 133, 25);
+
+        }
+
+        .buttons:nth-child(1) {
+            flex: 1;
+        }
+
+        .buttons:nth-child(2) {
+            flex: 1;
+        }
+
+        .DocsHolder {
+            flex: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div style="display: flex; width: 100vw;">
+        <div class="buttonHolder">
+            <div data-class="previous" class="buttons">Prev</div>
+            <div data-class="next" class="buttons">Next</div>
+        </div>
+        <div class="DocsHolder">
+            <div data-class="scroll-up" class="buttons" style="height: 37vh;"> UP </div>
+            <div data-class="scroll-down" class="buttons" style="height: 37vh;"> Down </div>
+        </div>
+    </div>
+
+    <script src="./long-press-event.min.js"></script>
+
+
+    <script>
+
+
+        let touched = false;
+
+        let commandToSend = "";
+
+        document.querySelectorAll(".buttons").forEach((button) => {
+            button.addEventListener("click", () => {
+                console.log("clicked");
+                let dataClass = (button.getAttribute("data-class"))
+                fetch("/sendCommand?command=" + dataClass)
+                    .then((res) => {
+                        console.log(res.json())
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+            })
+
+
+
+            // button.addEventListener("touchstart", () => {
+            //     console.log("TOUCHING");
+            // })
+        })
+
+
+        // setInterval(() => {
+        //     if (touched)
+        // }, 1200);
+
+
+    </script>
+
+</body>
+
+</html>
